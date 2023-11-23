@@ -1,10 +1,9 @@
 from kivymd.app import MDApp
 from kivy.lang import Builder
-from kivymd.uix.label import MDLabel
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.pickers import MDDatePicker
-from kivymd.uix.button import MDFlatButton
+from kivymd.uix.button import MDFlatButton, MDRaisedButton
 from datetime import datetime
 
 class DialogContent(MDBoxLayout):
@@ -15,7 +14,7 @@ class DialogContent(MDBoxLayout):
     def show_date_picker(self):
         date_dialog = MDDatePicker()
         date_dialog.bind(on_save=self.on_save)
-        date_dialog.open()  # Add this line to open the date picker
+        date_dialog.open()
 
     def on_save(self, instance, value, date_range):
         date = value.strftime("%A %d %B %Y")
@@ -31,7 +30,7 @@ class MainApp(MDApp):
         self.theme_cls.theme_style = "Dark"
         return Builder.load_file("main.kv")
 
-    def show_task_function(self):
+    def show_task_dialog(self):
         if not self.task_list_dialog:
             self.task_list_dialog = MDDialog(
                 title="Create Task",
@@ -44,17 +43,17 @@ class MainApp(MDApp):
                         text="Cancel",
                         on_release=self.task_list_dialog.dismiss
                     ),
-                    MDFlatButton(
+                    MDRaisedButton(
                         text="Add",
-                        on_release=self.add_task
+                        on_release=self.add_task_function
                     )
                 ]
             )
             self.task_list_dialog.open()
 
-    def add_task(self, *args):
+    def add_task_function(self, *args):
         task_content = self.task_list_dialog.content_cls
-        task = task_content.ids.task.text
+        task = task_content.ids.task_text.text
         task_date = task_content.ids.date_text.text
         self.task_list_dialog.dismiss()
         print(task, task_date)
@@ -65,3 +64,4 @@ class MainApp(MDApp):
 if __name__ == "__main__":
     app = MainApp()
     app.run()
+

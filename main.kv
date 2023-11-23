@@ -32,7 +32,7 @@ MDFloatLayout:
             hint_text: "Add Task ..."
             pos_hint: {"center_y": 0.4}
             max_text_length: 50
-            on_text_validate: app.add_task(task_text, date_text.text)
+            on_text_validate: app.add_task_function(task_text, date_text.text)
 
         MDIconButton:
             icon: "calendar"
@@ -48,7 +48,7 @@ MDFloatLayout:
 
         MDRaisedButton:
             text: "SAVE"
-            on_release: app.add_task(task_text, date_text.text)
+            on_release: app.add_task_function(task_text, date_text.text)
 
         MDFlatButton:
             text: "CANCEL"
